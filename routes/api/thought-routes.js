@@ -69,7 +69,7 @@ router.delete("/:thoughtId", (req, res) => {
 });
 
 //TODO: ROUTE TO ADD REACTION TO A THOUGHT
-router.post("/:thoughtId/reactions", async (req, res) => {
+router.post("/:thoughtId/reactions/", async (req, res) => {
   Thought.findOneAndUpdate(
     { _id: req.params.thoughtId },
     { $addToSet: { reactions: req.body } },
