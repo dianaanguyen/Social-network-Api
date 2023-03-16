@@ -4,12 +4,12 @@
   - [Description](#description)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Visual](#visual)
+  - [Walkthrough](#walkthrough)
 
 ## Description <a id="description"></a>
-The application is a text editor that enables user to use the application with/without internet connection, meeting the PWA criteria. 
+The application is a social network application, where users are able to create profiles, share and react to thoughts, and connect with other users. The application uses Node.js, Express.js and MongoDB.
 ## Installation <a id="installation"></a>
-Clone the repo and run npm i
+Clone the repo and run npm i. MongoDB must also be installed. Node server to run app.
 ## Usage <a id="usage"></a>
-Run npm start. The application should be able to run on localhost:3000. 
-## Visual <a id="visual"></a>
+Run npm start. Use MongoDB on Studio 3T. Use Insomnia to run API routes.
+## Walkthrough <a id="walkthrough"></a>
