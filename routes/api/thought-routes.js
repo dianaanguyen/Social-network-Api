@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { restart } = require('nodemon');
 const { Thought, Reaction } = require("../../models");
 
 //TODO: ROUTE TO GET ALL THOUGHTS
@@ -9,7 +10,7 @@ router.get("/", (req, res) => {
     } else {
       res.status(200).json(thoughts);
     }
-  });
+  })
 });
 
 //TODO: ROUTE TO CREATE A NEW THOUGHT
@@ -26,7 +27,7 @@ router.post("/", (req, res) => {
         res.status(200).json(thought);
       }
     }
-  );
+  )
 });
 
 //TODO: ROUTE TO GET SINGLE THOUGHT BASED ON THOUGHT ID
@@ -37,14 +38,12 @@ router.get("/:thoughtId", (req, res) => {
     } else {
       res.status(200).json(thought);
     }
-  }).populate("reactions");
+  }).populate("reactions")
 });
 
 //TODO: ROUTE TO UPDATE A THOUGHT
-router.put("/", (req, res) => {
-  Thought.findOneAndUpdate(
-    { _id: req.params.thoughtId },
-    {
+router.put("/:thoughtId", (req, res) => {
+  Thought.findOneAndUpdate({ _id: req.params.thoughtId }, {
       thoughtText: req.body.thoughtText,
       username: req.body.username,
     },
@@ -54,28 +53,27 @@ router.put("/", (req, res) => {
       } else {
         res.status(200).json(thought);
       }
-    }
-  );
+    })
 });
 
 //TODO: ROUTE TO DELETE A THOUGHT BASED ON THOUGHT ID
 router.delete("/:thoughtId", (req, res) => {
-  Thought.findOneAndDelete({ _id: req.params.thoughtId }, (err, thought) => {
+  Thought.findOneAndDelete({ _id: req.params.thoughtId }, 
+  (err, thought) => {
     if (err) {
       res.status(400).json(err);
     } else {
       res.status(200).json(thought);
     }
-  });
+  })
 });
 
 //TODO: ROUTE TO ADD REACTION TO A THOUGHT
-router.post("/:thoughtId/reactions", (req, res) => {
+router.post("/:thoughtId/reactions", async (req, res) => {
   Thought.findOneAndUpdate(
     { _id: req.params.thoughtId },
     { $addToSet: { reactions: req.body } },
-    { new: true, runValidators: true }
-  )
+    { new: true, runValidators: true })
     .then((dbThoughtData) =>
       !dbThoughtData
         ? res.status(404).json({ message: "No thought found with this id" })

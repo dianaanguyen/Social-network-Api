@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
     } else {
       res.status(200).json(users);
     }
-  });
+  })
 });
 
 //TODO - ROUTE THAT CREATES A NEW USER
@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
         res.status(200).json(user);
       }
     }
-  );
+  )
 });
 
 //TODO - ROUTE THAT GETS A SINGLE USER BASED ON USER ID
@@ -38,7 +38,7 @@ router.get("/:userId", (req, res) => {
     } else {
       res.status(200).json(user);
     }
-  });
+  })
 });
 
 //TODO - ROUTE THAT UPDATES A SINGLE USER
@@ -47,7 +47,7 @@ router.put("/:userId", (req, res) => {
     { _id: req.params.userId },
     {
       username: req.body.username,
-      email: req.body.email,
+      email: req.body.email
     },
     (err, user) => {
       if (err) {
@@ -56,7 +56,7 @@ router.put("/:userId", (req, res) => {
         res.status(200).json(user);
       }
     }
-  );
+  )
 });
 
 //TODO - ROUTE THAT DELETES A SINGLE USER BASED ON USER ID
@@ -67,17 +67,16 @@ router.delete("/:userId", (req, res) => {
     } else {
       res.status(200).json(user);
     }
-  });
+  })
 });
 
 //TODO - ROUTE THAT ADDS A FRIEND TO A USER
-router.put("/:userId/friends/:friendId", (req, res) => {
+router.put("/:userId/friends/:friendId", async (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
     { $addToSet: { friends: req.params.friendId } },
-    { new: true, runValidators: true }
-  )
-    .then((user) =>
+    { new: true, runValidators: true })
+  .then((user) =>
       !user
         ? res.status(404).json({ message: "No user found with this id!" })
         : res.json(user)
